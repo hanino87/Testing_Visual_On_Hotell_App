@@ -55,11 +55,11 @@ Hampus.Testsuite_Visual_Testing.spec.ts-snapshots.
 
 Here every generating snapshots will be stored from your testfile. 
 
-#9. Create a file named .env and then paste all info from file copy.env in it. 
+# 9. Create a file named .env and then paste all info from file copy.env in it. 
 
-#10. Hannes will send you the details for every env variable local not on remote for security reasons. 
+# 10. Hannes will send you the details for every env variable local not on remote for security reasons. 
 
-#11. At the ending of projekt one in the group push upp following files to Main Branch
+# 11. At the ending of projekt one in the group push upp following files to Main Branch
 
  - playwright.config.ts
  - .gitignore
