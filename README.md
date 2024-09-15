@@ -24,9 +24,19 @@ dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 reporter: [["line"], ["allure-playwright"]],
 
-# 6. Install allure in our terminal with following command: 
+# 6. Install allure in our terminal with following command if you dont have it installed globally: 
+
+check if you have allure on your system 
+
+allure-version 
+
+if you dont get version number do following command: 
 
 npm install -g allure-commandline
+
+if you allreday have it globally on your machine just type in following in your command: 
+
+npm i -D allure-playwright
 
 
 # 7. in our mapp tests rename the testfile to the following name.
@@ -43,11 +53,11 @@ Example
 
 Hampus.Testsuite_Visual_Testing.spec.ts-snapshots.
 
-Here every generating snapshots will be stored. 
+Here every generating snapshots will be stored from your testfile. 
 
-#9. Create a file named .env and then paste all info in file copy.env in it. 
+#9. Create a file named .env and then paste all info from file copy.env in it. 
 
-#10. Hannes will send you the details for every env variable local not on remote. 
+#10. Hannes will send you the details for every env variable local not on remote for security reasons. 
 
 #11. At the ending of projekt one in the group push upp following files to Main Branch
 
