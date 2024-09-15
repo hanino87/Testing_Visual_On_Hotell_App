@@ -10,7 +10,7 @@ npm init playwright@latest (command for install)
 
 # 3. Create a Local Branch with your name as branch name and go to that branch.
 
-# 4. In file playwrigt.config.ts paste following code before code block expeort default:
+# 4. In file playwrigt.config.ts paste following code before code block export default:
 
 import dotenv from 'dotenv';
 
@@ -18,7 +18,7 @@ import path from 'path';
 
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-take away other code blocks here in this section.
+
 
 # 5. In file playwright.config.ts in row reporter: replace the row with following codes: 
 
