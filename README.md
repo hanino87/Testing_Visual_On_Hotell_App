@@ -59,7 +59,9 @@ Here every generating snapshots will be stored from your testfile.
 
 # 10. Hannes will send you the details for every env variable local not on remote for security reasons. 
 
-# 11. At the ending of projekt one in the group push upp following files to Main Branch
+# 11 in your gitignore file add .env in that mapp so the env file dont come upp to github.
+
+# 12. At the ending of projekt one in the group push upp following files to Main Branch
 
  - playwright.config.ts
  - .gitignore
