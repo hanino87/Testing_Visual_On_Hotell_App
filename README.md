@@ -18,8 +18,6 @@ import path from 'path';
 
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-
-
 # 5. In file playwright.config.ts in row reporter: replace the row with following codes: 
 
 reporter: [["line"], ["allure-playwright"]],
@@ -61,7 +59,22 @@ Here every generating snapshots will be stored from your testfile.
 
 # 11 in your gitignore file add .env in that mapp so the env file dont come upp to github.
 
-# 12. At the ending of projekt one in the group push upp following files to Main Branch
+# 12. in your file package.json
+
+klistra in följande kod under "scripts": {
+
+    "run-tests": "npx playwright test",
+    "run-tests--ui":"npx playwright test --ui",
+    "run-tests--debug":"npx playwright test --debug",
+    "update--snapshots":"npx playwright test --update-snapshots",
+    "run-tests--allure":"npx playwright test --reporter=line,allure-playwright",
+    "do--allure--report":"allure generate ./allure-results -o ./allure-report",
+    "clean--allure--report":"allure generate ./allure-results -o ./allure-report--clean",
+    "open--allure--report":"allure open ./allure-report"
+
+
+
+# 13. At the ending of projekt one in the group push upp following files to Main Branch
 
  - playwright.config.ts
  - .gitignore
