@@ -9,6 +9,7 @@ test.describe('Our Visual Regresion tests on Hotell APP', () => {
         await page.locator('input[type="text"]').fill(`${process.env.USERNAME}`);
         await page.locator('input[type="password"]').fill(`${process.env.PASSWORD}`);
         await page.getByRole('button', { name: 'Login' }).click();
+        await expect(page).toHaveScreenshot('dashboard-page.png')
         await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
         await expect(page).toHaveScreenshot('dashboard-page.png')
         await expect(page).not.toHaveScreenshot('login-page.png')
@@ -22,7 +23,9 @@ test.describe('Our Visual Regresion tests on Hotell APP', () => {
         await page.goto(`${process.env.CLIENTS_EDIT_URL}`);
         await expect(page.getByText('Client')).toBeVisible();
         await expect(page).toHaveScreenshot('clientedit-page.png');
-        await page.waitForTimeout(2000);
+        // await page.waitForTimeout(2000);
+
+        // dont use this code block 
 
     });
 
@@ -39,7 +42,6 @@ test.describe('Our Visual Regresion tests on Hotell APP', () => {
         // assert that you are not longer on login-page 
 
         await expect(page).not.toHaveScreenshot('login-page.png')
-
         await expect(page.getByText('log in ')).toBeHidden();
 
          /*
@@ -55,7 +57,6 @@ test.describe('Our Visual Regresion tests on Hotell APP', () => {
         */
 
         await page.goto(`${process.env.BILLS_VIEW_URL}`);
-    
         await expect(page).toHaveScreenshot('bill-view-page.png')
 
         // assert when go to create bill page that the page on that site is not page for bill view
@@ -74,15 +75,10 @@ test.describe('Our Visual Regresion tests on Hotell APP', () => {
         // go to bill edit page and assert that the page dont have snapshot of bill view.
 
         await page.goto(`${process.env.BILLS_EDIT_URL}`);
-
         await expect(page).not.toHaveURL(`${process.env.BILLS_VIEW_URL}`);
-
         await expect(page).toHaveScreenshot('bill-edit-page.png');
-
         await expect(page).not.toHaveScreenshot('bill-create-page.png');
-
         await expect(page).toHaveURL(`${process.env.BILLS_EDIT_URL}`);
-
         await page.waitForTimeout(2000);
 
     });
@@ -95,7 +91,6 @@ test.describe('Our Visual Regresion tests on Hotell APP', () => {
         await page.locator('input[type="password"]').fill(`${process.env.PASSWORD}`);
         await page.getByRole('button', { name: 'Login' }).click();
         await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
-
         await expect(page).toHaveURL(`${process.env.DASHBOARD_VIEW_URL}`);
 
         // mask textnumber 2 and link button on room box on website and create a snapshot of it 
@@ -117,7 +112,6 @@ test.describe('Our Visual Regresion tests on Hotell APP', () => {
        
         */
 
-        await page.waitForTimeout(2000);
     });
 
     test ('fourth Visual Regression test on Room Page create a room and delete it ', async ({ page }) => {
@@ -127,39 +121,27 @@ test.describe('Our Visual Regresion tests on Hotell APP', () => {
         await page.locator('input[type="text"]').fill(`${process.env.USERNAME}`);
         await page.locator('input[type="password"]').fill(`${process.env.PASSWORD}`);
         await page.getByRole('button', { name: 'Login' }).click();
-
         await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
-
         await expect(page).toHaveScreenshot('dashboard-page.png');
 
         // go to room page and assert that it has room-page-view.png
 
         await page.goto(`${process.env.ROOMS_VIEW_URL}`);
-
         await expect(page.getByText('Rooms')).toBeVisible();
-
-
-
         await expect(page).toHaveScreenshot('Room-view-page.png');
-
         await expect(page).not.toHaveScreenshot('dashboard-page.png');
-
         await expect(page.getByText('Clients')).toBeHidden();
-
         await expect(page.getByText('Rooms')).toBeVisible();
+
+        // create room 
 
         await page.goto(`${process.env.ROOMS_CREATE_URL}`);
-
         await expect(page).toHaveScreenshot('Room-create-page.png');
         await page.getByRole('combobox').selectOption('single');
-
         await page.locator('div').filter({ hasText: /^Number$/ }).getByRole('spinbutton').fill('7');
-       
         await page.locator('div').filter({ hasText: /^Floor$/ }).getByRole('spinbutton').fill('4');
         await expect(page.locator('div').filter({ hasText: /^Floor$/ }).getByRole('spinbutton')).toHaveValue('4');
-
         await page.locator('.checkbox').click();
-        
         await page.locator('div').filter({ hasText: /^Price$/ }).getByRole('spinbutton').fill('2000');
         await expect(page.locator('div').filter({hasText: /^Price$/  }).getByRole('spinbutton')).not.toHaveValue('4');
         await page.getByRole('listbox').selectOption('balcony');
@@ -184,31 +166,89 @@ test.describe('Our Visual Regresion tests on Hotell APP', () => {
 
         await page.getByRole('img').nth(2).click();
         await page.getByText('Delete').click();
-
         await expect(page).toHaveScreenshot('Room-view-page.png');
-
         await expect(page).not.toHaveScreenshot('Room-view-page-with-3-rooms.png');
 
         // go to dashboard page and ensure that dashboard page look like before create a room by assert that this has snapshot dashboard-page 
 
-
         await page.goto(`${process.env.DASHBOARD_VIEW_URL}`);
-
         await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
-
         await expect(page).toHaveScreenshot('dashboard-page.png');
-
         await page.waitForTimeout(2000);
 
+    }); 
 
+    test.only('Five Visual Regression test on Room Page using screenshot on wrong login', async ({ page }) => {
 
+        await page.goto(`${process.env.BASE_URL}`);
+        await page.locator('input[type="text"]').fill(`${process.env.USERNAME}`);
 
+        // fill in wrong password and assert that the page dont longer have screenshots login.pgn 
+
+        await page.locator('input[type="password"]').fill("apa");
+        await page.getByRole('button', { name: 'Login' }).click();
+        await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).not.toBeVisible();
+        await expect(page).not.toHaveScreenshot('login-page.png');
+
+        // assert that the page has wrong inlogg snapshots now when you filled in wrong password. 
+
+        // assert that you get a fullpage screenshot of the wrong inlogg. 
+
+        await expect(page).toHaveScreenshot('login-page-wrong-password.png'),{fullPage:true};
+
+        // assert that you get a snapshot of just the error message element 
+
+        const wronginloggelement= page.locator('#app > div > div')
+
+        await expect(wronginloggelement).toHaveScreenshot('element-snapshot-with-text-badusername-or-badpassword.png');
+
+    });
+    test('Six Visual Regression test mask a part of reservation page ', async ({ page }) => {
+        await page.goto(`${process.env.BASE_URL}`);
+        await page.locator('input[type="text"]').fill(`${process.env.USERNAME}`);
+        await page.locator('input[type="password"]').fill(`${process.env.PASSWORD}`);
+        await page.getByRole('button', { name: 'Login' }).click();
+        await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
+        await page.goto(`${process.env.RESERVATIONS_VIEW_URL}`);
+        await expect(page.getByText('Reservations')).toBeVisible();
+        await expect(page).toHaveScreenshot('reservation-view-page.png');
+        
+        // mask the reservation page and assert that the page now have that screenshoot 
+
+        await expect(page).toHaveScreenshot('resveration-view-page-mask.png',{
+            mask: [page.locator('#app > div > div.reservations > div')],
+            maskColor: '#d55303'
+        })
+       
+
+    });
+
+    test('Seventh Visual Regression test change reservation page and expect new snapshot ', async ({ page }) => {
+        await page.goto(`${process.env.BASE_URL}`);
+        await page.locator('input[type="text"]').fill(`${process.env.USERNAME}`);
+        await page.locator('input[type="password"]').fill(`${process.env.PASSWORD}`);
+        await page.getByRole('button', { name: 'Login' }).click();
+        await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
+        await page.goto(`${process.env.RESERVATIONS_VIEW_URL}`);
+        await expect(page.getByText('Reservations')).toBeVisible();
+        await expect(page).toHaveScreenshot('reservation-view-page.png');
+        await page.locator('#app > div > div.reservations > div > div.action > img').click();
+        await page.locator('#app > div > div.reservations > div > div.menu > a:nth-child(2)').click();
+
+        // do assert that you see error message and assert that the page now have screenshoot without reservations 
+
+        await expect(page.locator('#app > div > div:nth-child(3) > p')).toBeVisible();
+
+        await expect(page).toHaveScreenshot('reservation-view-without-reservation-page.png');
+
+        // do assert on the specifik element that show no users
+  
+        const element = page.locator('#app > div > div:nth-child(3) > p');
+
+        await expect(element).toHaveScreenshot('element-snapshot-with-text-no-reservations.png');
 
 
 
     });
-
-
-     
 
 });
